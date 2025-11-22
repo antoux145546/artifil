@@ -1,344 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>artifil – Handmade Crochet • Beirut 🇱🇧</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <title>Login System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <style>
-    :root {
-      --blue-bg: #f1f6ff;
-      --blue-soft: #e0ecff;
-      --blue-main: #5a8dff;
-      --blue-mid: #2e63d6;
-      --blue-dark: #142550;
-      --accent: #ffb75e;
-      --border-soft: #c8d9ff;
-      --shadow-soft: 0 12px 32px rgba(49, 89, 171, 0.16);
-      --radius-xl: 22px;
-      --radius-lg: 18px;
-      --radius-pill: 999px;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: "Poppins", sans-serif;
-      background: radial-gradient(circle at top left, #f0f5ff, #ffffff);
-      color: #18243f;
-      line-height: 1.6;
-    }
-    a { color: inherit; text-decoration: none; }
+        .container {
+            background: #111827;
+            padding: 24px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
 
-    .page { max-width: 1120px; margin: auto; padding: 20px; }
+        h1 { text-align: center; margin-bottom: 16px; }
 
-    .neon-bar {
-      width: 100%; height: 4px;
-      background: linear-gradient(90deg,#8bb6ff,#bcd6ff,#8bb6ff);
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
+        .tabs {
+            display: flex;
+            margin-bottom: 16px;
+            border-radius: 999px;
+            background: #020617;
+            padding: 4px;
+        }
 
-    header {
-      position: sticky; top: 0;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(10px);
-      border-radius: 18px;
-      padding: 12px 20px;
-      border: 1px solid #cfe0ff;
-      box-shadow: 0 4px 20px rgba(160,180,220,0.3);
-      margin-bottom: 25px;
-    }
+        .tab {
+            flex: 1; text-align: center; padding: 8px 0; cursor: pointer;
+            font-size: 14px; border-radius: 999px;
+            transition: background 0.2s, color 0.2s;
+        }
 
-    .nav { display: flex; justify-content: space-between; align-items: center; }
-    .logo { display: flex; align-items: center; gap: 10px; }
-    .logo-mark {
-      width: 40px; height: 40px;
-      background: radial-gradient(circle,#ffffff,#5a8dff);
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-weight: 700; font-size: 20px;
-      box-shadow: 0 0 12px rgba(90,141,255,0.8);
-    }
-    .logo-text-main { font-size: 20px; font-weight: 700; text-transform: uppercase; }
-    .logo-text-tagline { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color:#7290bf; }
+        .tab.active { background: #2563eb; color: white; font-weight: bold; }
 
-    .nav-links { display: flex; gap: 16px; font-size: 14px; }
-    .nav-cta {
-      background: linear-gradient(120deg,#5a8dff,#88b2ff);
-      padding: 7px 16px; border-radius:999px;
-      color:white; font-weight:600;
-      box-shadow:0 0 12px rgba(129,169,255,0.8);
-    }
+        form { display: none; margin-top: 8px; }
+        form.active { display: block; }
 
-    /* HERO */
-    .hero {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 20px;
-      margin-bottom: 40px;
-    }
-    .hero-card {
-      background: #f6f8ff;
-      border: 1px solid #d2ddff;
-      border-radius: 22px;
-      padding: 24px;
-      box-shadow: var(--shadow-soft);
-    }
-    .hero-title { font-size: 32px; color: #1a2758; font-weight: 700; }
-    .hero-title span { color: var(--blue-main); }
-    .hero-subtitle { color: #4a5880; margin: 12px 0; }
+        label { display: block; font-size: 14px; margin-top: 10px; margin-bottom: 4px; }
 
-    .badge {
-      background: white; border:1px solid #c9d6ff;
-      padding: 6px 12px; border-radius:999px;
-      font-size: 12px; margin-right: 6px;
-      color: #2d3f77;
-    }
+        input {
+            width: 100%; padding: 8px 10px; border-radius: 8px;
+            border: 1px solid #374151; background: #020617; color: #e5e7eb;
+        }
 
-    .btn-primary {
-      background: linear-gradient(120deg,#5a8dff,#88b2ff);
-      color:white; border:none;
-      padding:10px 18px;
-      border-radius:999px; cursor:pointer;
-      font-weight:600; box-shadow:0 0 14px rgba(129,169,255,0.8);
-    }
+        input:focus { border-color: #2563eb; }
 
-    /* ABOUT */
-    .about {
-      background:white;
-      padding:24px;
-      border-radius:22px;
-      border:1px solid #d1dcff;
-      box-shadow:var(--shadow-soft);
-      margin-bottom:40px;
-    }
-    .about-list {
-      list-style:none;
-      margin-top:14px;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
-      color:#2f3e6c;
-      font-size:14px;
-    }
-    .about-list li::before { content:"✶ "; color:#ffb75e; }
+        button {
+            margin-top: 16px; width: 100%; padding: 10px;
+            border-radius: 999px; border: none; cursor: pointer;
+            font-weight: bold; background: linear-gradient(90deg,#2563eb,#4f46e5);
+            color: white; box-shadow: 0 0 12px rgba(59,130,246,0.6);
+        }
 
-    /* PRODUCTS */
-    .grid-cards {
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:16px;
-    }
-    .card {
-      background:white; border-radius:18px;
-      border:1px solid #d2ddff;
-      padding:14px; box-shadow:0 8px 20px rgba(180,195,230,0.4);
-    }
-    .card img { border-radius:14px; margin-bottom:12px; }
-    .card-title { font-size:16px; font-weight:600; color:#253366; }
-    .price { color:#e2902b; font-weight:700; }
-    .card-pill {
-      background:#eef2ff; border:1px solid #c4d4ff;
-      padding:4px 10px; border-radius:999px;
-      font-size:12px; color:#2f3e6c;
-    }
+        button:hover { box-shadow: 0 0 18px rgba(96,165,250,0.9); }
 
-    .info-strip {
-      margin-top:20px;
-      background:#eef3ff;
-      border:1px dashed #c1d0ff;
-      padding:12px 16px;
-      border-radius:16px;
-      display:flex; justify-content:space-between;
-      font-size:13px; flex-wrap:wrap;
-      gap:8px;
-    }
+        .status { margin-top: 14px; font-size: 14px; min-height: 18px; }
+        .status.error { color: #f97373; }
+        .status.success { color: #4ade80; }
+    </style>
 
-    /* ORDER */
-    .order-section { margin-top:40px; }
-    .order-highlight {
-      margin-top:14px; background:#f7f9ff;
-      border:1px solid #d3ddff;
-      padding:14px; border-radius:16px;
-    }
-
-    footer {
-      margin-top:40px; padding-top:14px;
-      border-top:1px dashed #c6d4ff;
-      font-size:12px; display:flex;
-      justify-content:space-between;
-      color:#6473a3;
-    }
-
-    @media(max-width:800px){
-      .hero{grid-template-columns:1fr;}
-      .grid-cards{grid-template-columns:1fr;}
-    }
-  </style>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
-
 <body>
-<div class="page">
-  <div class="neon-bar"></div>
 
-  <!-- HEADER -->
-  <header id="top">
-    <div class="nav">
-      <div class="logo">
-        <div class="logo-mark" style="padding:0;">
-  <img src="artifil.jpg" alt="artifil profile" 
-       style="width:100%;height:100%;border-radius:14px;object-fit:cover;">
-</div>
-        <div>
-          <div class="logo-text-main">artifil</div>
-          <div class="logo-text-tagline">handmade crochet</div>
+    <div class="container">
+        <h1>Welcome</h1>
+
+        <div class="tabs">
+            <div class="tab active" data-target="loginForm">Sign in</div>
+            <div class="tab" data-target="signupForm">Create account</div>
         </div>
-      </div>
 
-      <nav class="nav-links">
-        <a href="#about">About</a>
-        <a href="#products">Products</a>
-        <a href="#order" class="nav-cta">Order</a>
-      </nav>
-    </div>
-  </header>
+        <!-- LOGIN FORM -->
+        <form id="loginForm" class="active">
+            <label>Email</label>
+            <input type="email" id="loginEmail" required>
 
-  <!-- HERO -->
-  <section class="hero">
+            <label>Password</label>
+            <input type="password" id="loginPassword" required>
 
-    <!-- LEFT -->
-    <div class="hero-card">
-      <h1 class="hero-title">Handmade Crochet<br><span>Made in 2–7 days</span></h1>
+            <button type="submit">Sign in</button>
+        </form>
 
-      <p class="hero-subtitle">
-        Every piece at artifil is crocheted by hand when you order —  
-        dolls, mini pieces and amigurumi 🧶
-      </p>
+        <!-- SIGNUP FORM -->
+        <form id="signupForm">
+            <label>Email</label>
+            <input type="email" id="signupEmail" required>
 
-      <div>
-        <span class="badge">Handmade</span>
-        <span class="badge">2–7 days</span>
-        <span class="badge">Delivery within Beirut only 🇱🇧</span>
-        <span class="badge">@artifil.lb</span>
-      </div>
+            <label>Password (min. 6 characters)</label>
+            <input type="password" id="signupPassword" required>
 
-      <div style="margin-top:14px;">
-        <a href="#products" class="btn-primary">See products</a>
-        <a href="#order" class="btn-primary">Order now</a>
-      </div>
+            <button type="submit">Create account</button>
+        </form>
+
+        <div id="status" class="status"></div>
     </div>
 
-    <!-- RIGHT: YOUR PHOTO -->
-    <div class="hero-card" style="text-align:center;">
-      <h3 style="color:#253366;font-weight:600;">Handmade with care ❤️</h3>
-    </div>
 
-  </section>
+    <script>
+        // 🔧 FIREBASE CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyAx1tzQCSmIrMnTmgZFSTyXAjOcesLxwE8",
+            authDomain: "artifil-dcbaa.firebaseapp.com",
+            projectId: "artifil-dcbaa",
+            storageBucket: "artifil-dcbaa.firebasestorage.app",
+            messagingSenderId: "682315110782",
+            appId: "1:682315110782:web:7af819725a080d8657fb2f",
+            measurementId: "G-7TJBYBFBPJ"
+        };
 
-  <!-- ABOUT -->
-  <section id="about" class="about">
-    <h2 style="font-size:22px;font-weight:600;color:#1a2758;margin-bottom:14px;">About artifil</h2>
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
 
-    <p>artifil is a handmade crochet shop based in Beirut 🇱🇧.</p>
-    <p>All items are crocheted by hand after your order, using soft high-quality yarn.</p>
+        // 🔄 TABS (switch login / signup)
+        const tabs = document.querySelectorAll('.tab');
+        const forms = document.querySelectorAll('form');
 
-    <ul class="about-list">
-      <li>Handmade on demand</li>
-      <li>Amigurumi pieces & dolls</li>
-      <li>High-quality yarn</li>
-      <li>Delivery in Beirut only 🇱🇧</li>
-      <li>Order through Instagram @artifil.lb</li>
-    </ul>
-  </section>
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                forms.forEach(f => f.classList.remove('active'));
 
-  <!-- PRODUCTS -->
-  <section id="products">
-    <h2 class="section-title" style="font-size:22px;font-weight:600;color:#1a2758;margin-bottom:12px;">All products</h2>
-    <p style="color:#4a5880;margin-bottom:18px;">Choose your favorite handmade piece</p>
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.target).classList.add('active');
 
-    <div class="grid-cards">
+                document.getElementById("status").textContent = "";
+            });
+        });
 
-      <!-- PRODUCT 1 -->
-      <article class="card">
-        <img src="your-image-1.jpg">
-        <div class="card-title">Blue Hoodie Doll</div>
-        <p>Handmade crochet doll.</p>
-        <div style="margin-bottom:6px;">Availability: <span style="color:green;font-weight:600;">Available</span></div>
-        <div>
-          <span class="price">$Price</span>
-          <span class="card-pill">Handmade</span>
-        </div>
-      </article>
+        const statusEl = document.getElementById("status");
 
-      <!-- PRODUCT 2 -->
-      <article class="card">
-        <img src="your-image-2.jpg">
-        <div class="card-title">Tiny Bunny Plush</div>
-        <p>Small amigurumi plush.</p>
-        <div style="margin-bottom:6px;">Availability: <span style="color:red;font-weight:600;">Unavailable</span></div>
-        <div>
-          <span class="price">$Price</span>
-          <span class="card-pill">Handmade</span>
-        </div>
-      </article>
+        function setStatus(msg, type = "") {
+            statusEl.textContent = msg;
+            statusEl.className = "status " + type;
+        }
 
-      <!-- PRODUCT 3 -->
-      <article class="card">
-        <img src="your-image-3.jpg">
-        <div class="card-title">Mini Head Keychain</div>
-        <p>Handmade keychain.</p>
-        <div style="margin-bottom:6px;">Availability: <span style="color:green;font-weight:600;">Available</span></div>
-        <div>
-          <span class="price">$Price</span>
-          <span class="card-pill">Handmade</span>
-        </div>
-      </article>
+        // 🟢 SIGNUP + REDIRECT
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
 
-    </div>
+            try {
+                await auth.createUserWithEmailAndPassword(email, password);
+                setStatus("Account created successfully!", "success");
 
-    <div class="info-strip">
-      <span>All items are handmade after ordering 🧶</span>
-      <span>Beirut delivery only 🇱🇧</span>
-      <span>Instagram: @artifil.lb</span>
-    </div>
-  </section>
+                // REDIRECTION
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 800);
 
-  <!-- ORDER SECTION -->
-  <section id="order" class="order-section">
-    <h2 class="section-title" style="font-size:22px;font-weight:600;color:#1a2758;margin-bottom:12px;">Order your product</h2>
-    <p style="color:#4a5880;">
-      Delivery is available **only within Beirut 🇱🇧**.  
-      Orders are made by hand — preparation time: <strong>2 to 7 days</strong>.
-    </p>
+            } catch (error) {
+                setStatus(error.message, "error");
+            }
+        });
 
-    <div class="order-highlight">
-      <strong>Copy & paste this form into Instagram DM:</strong><br><br>
-      • Product name: <br>
-      • Quantity: <br>
-      • Color (optional): <br>
-      • Your name: <br>
-      • Your location in Beirut 🇱🇧: <br>
-      • Notes (optional):
-    </div>
+        // 🔵 LOGIN + REDIRECT
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
 
-    <a href="https://www.instagram.com/artifil.lb" target="_blank"
-       class="btn-primary" style="margin-top:20px;display:inline-block;">
-       Send on Instagram →
-    </a>
-  </section>
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                setStatus("Login successful!", "success");
 
-  <footer>
-    <span>© <span id="year"></span> artifil — handmade crochet</span>
-    <a href="#top" class="back-to-top">Back to top ↑</a>
-  </footer>
+                // REDIRECTION
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 800);
 
-</div>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+            } catch (error) {
+                setStatus(error.message, "error");
+            }
+        });
+    </script>
 
 </body>
 </html>
